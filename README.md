@@ -1,4 +1,4 @@
-# WT  
+# PyWt  
 A python module for connecting to Webtrends
 
 ### Config
