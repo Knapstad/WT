@@ -26,7 +26,7 @@ except FileNotFoundError as exc:
 
 proxies = config["proxies"]
 
-#proxies = False
+#proxies = False 
 #verify=certifi.where()
 verify=False
 
