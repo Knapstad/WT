@@ -1,4 +1,4 @@
-# WT  
+# PyWt  
 A python module for connecting to Webtrends
 
 ### Config
@@ -12,7 +12,7 @@ example config file:
  "profile": None, 
  "language": "en-GB", 
  "format": "json", 
- "auth": "account\User, Password",
+ "auth": ("account\User, Password"),
  "verify": None}
 ```
  
