@@ -105,3 +105,4 @@ venv.bak/
 
 # myfiles
 secrets/config.txt
+pywt/secrets/*.txt
