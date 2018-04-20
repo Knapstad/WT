@@ -6,14 +6,23 @@ Created on Mon Apr  9 14:44:21 2018
 
 This file is licensed under the terms of the MIT license.
 
+This connector contains the class Webtrends.
+with the methods:
+
+    get_profiles : gets the awailable profileIds
+    get_reports : gets the awailable reports on a profile Id
+    fetch_report : gets the specified report
+
+This class need some configuration to run, theese configurations can be edited
+in the "secrets/config.json" file that is generated when you import the module.
+or directly in the config_ dictionary that is imported from this file.
+
 """
 
 
 import requests
 from typing import Dict
-from requests.auth import HTTPBasicAuth
 import json
-import time
 import os
 
 try:
@@ -21,7 +30,7 @@ try:
         config_ = json.load(F)
 except FileNotFoundError as exc:
     print(exc, """Configfile not found, make shure there is a file called
-          "config.txt" in the secrets folder""")
+          "config.json" in the secrets folder""")
 
 proxies = config_["proxies"]
 verify = config_["verify"]
@@ -189,13 +198,13 @@ class Webtrends():
         if report == "key":
             url = self.analytics_url+"profiles/"+str(profile)+"/KeyMetrics/"
         else:
-            url = (str(self.analytics_url) + "profiles/" + str(profile) +
-                   "/reports/" + str(report) + "/?format=" + str(format_) +
-                   "&start_period=" + str(start) + "&end_period=" + str(end) +
-                   "&sort_by=" + str(sort) + "&period_type=" +
-                   str(period_type) + "&measures=" + str(measures) +
-                   "&language=" + str(language) + "&range="+str(range_) +
-                   "search=" + str(search) + "&totals=" + str(totals))
+            url = (str(self.analytics_url) + "profiles/" + profile +
+                   "/reports/" + str(report) + "/?format=" + format_ +
+                   "&start_period=" + start + "&end_period=" + end +
+                   "&sort_by=" + sort + "&period_type=" +
+                   period_type + "&measures=" + measures +
+                   "&language=" + language + "&range="+range_ +
+                   "search=" + search + "&totals=" + totals)
 
         with requests.Session() as session:
                 print(url)
