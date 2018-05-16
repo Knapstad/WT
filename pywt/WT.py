@@ -34,32 +34,44 @@ except FileNotFoundError as exc:
 
 proxies = config_["proxies"]
 verify = config_["verify"]
-auth = config_["auth"]
 
 
-class Webtrends():
+class Analytics():
     """ Defines Webtrends class
     Sets variables:
     self.analytics_url  = "https://ws.webtrends.com/v3/Reporting/"
-    self.format = config_["format"]
+    self.format = config_["analytics"]["format_"]
     self.profiles = None
     self.reports = None
-    self.profile = config_["profile"]
+    self.profile =config_["analytics"]["profile"]
     self.language = "en-GB"
     self.verify = config_["verify"]
-    self.auth = config_["auth"]
+    self.auth = config_["analytics"]["auth"]
     self.proxies= config_["proxies"]
     """
 
     def __init__(self) -> None:
         self.analytics_url: str = "https://ws.webtrends.com/v3/Reporting/"
-        self.format: str = config_["format"]
+        self.format: str = config_["analytics"]["format_"]
         self.profiles: Dict[str, str] = None
         self.reports: Dict[str, str] = None
-        self.profile: str = config_["profile"]
-        self.language: str = config_["language"]
+        self.profile: str = config_["analytics"]["profile"]
+        self.language: str = config_["analytics"]["language"]
         self.verify: str = config_["verify"]
-        self.auth: str = config_["auth"]
+        self.auth: str = config_["analytics"]["auth"]
+
+    def __str__(self) -> str:
+        represetation = (
+                f"""
+                profile = {self.profile}
+                format = {self.format}
+                language = {self.language}
+                verify = {self.verify}
+                auth = {self.auth}
+                profiles = {self.profiles}
+                reports = {self.reports}
+                """)
+        return represetation
 
     def get_profiles(self) -> requests.models.Response:
         """Returns a list of all available profiles """
@@ -142,7 +154,7 @@ class Webtrends():
 
             format_:
                 Specify what format you want the data retured as.
-                if no format is spesified format_ default to self.format.
+                if no format is spesified format_ defaults to self.format.
                 if self.format is None default is json
                 Valid values:
                 JSON format_ = "json"
@@ -195,6 +207,8 @@ class Webtrends():
             language = self.language
         if not format_:
             format_ = self.format
+        if not auth:
+            auth = self.auth
         if report == "key":
             url = self.analytics_url+"profiles/"+str(profile)+"/KeyMetrics/"
         else:
